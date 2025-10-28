@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import api from '@forge/api';
+import { invoke } from '../utils/invoke';
+import { getProductContext } from '../utils/context';
+import type { FocusScore, TaskLoad, BurnoutRisk, TeamMetrics } from '../types/metrics';
 
 interface Metrics {
   focusScore: number;
@@ -25,15 +28,14 @@ const Dashboard: React.FC = () => {
 
   const loadMetrics = async () => {
     try {
-      const context = await api.context();
-      const accountId = context.accountId;
+      const { accountId } = await getProductContext();
 
       // Get all metrics
       const [focusData, taskData, burnoutData, teamData] = await Promise.all([
-        invokeFunction('getFocusScore', { accountId }),
-        invokeFunction('getTaskLoad', { accountId }),
-        invokeFunction('getBurnoutRisk', { accountId }),
-        invokeFunction('getTeamMetrics')
+        invoke<FocusScore>('getFocusScore', { accountId }),
+        invoke<TaskLoad>('getTaskLoad', { accountId }),
+        invoke<BurnoutRisk>('getBurnoutRisk', { accountId }),
+        invoke<TeamMetrics>('getTeamMetrics')
       ]);
 
       setMetrics({
@@ -56,30 +58,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  const invokeFunction = async (functionName: string, payload?: any) => {
-    return new Promise((resolve, reject) => {
-      import('@forge/ui').then(({ useEffect }) => {
-        // This is a placeholder - in real Forge, you'd use the invoke API
-        // For demo purposes, we'll use mock data
-        setTimeout(() => resolve(getMockData(functionName)), 300);
-      }).catch(reject);
-    });
-  };
-
-  const getMockData = (functionName: string) => {
-    switch (functionName) {
-      case 'getFocusScore':
-        return { focusScore: 72, totalIssues: 8, completedCount: 12 };
-      case 'getTaskLoad':
-        return { taskCount: 8, totalStoryPoints: 21, averagePerSprint: 8 };
-      case 'getBurnoutRisk':
-        return { riskLevel: 'medium', burnoutScore: 45, issueCount: 32, commentCount: 28 };
-      case 'getTeamMetrics':
-        return { totalIssues: 45, highPriorityCount: 8, teamSize: 6, averageIssuesPerMember: 7.5 };
-      default:
-        return {};
-    }
-  };
+  // invoke and mock handled via utils/invoke
 
   if (loading) {
     return (
