@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life OS Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #FAFAFA;
+            color: #1E1E1E;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #009688 0%, #00BCD4 100%);
+            color: white;
+            padding: 24px 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-top: 4px solid #009688;
+        }
+        
+        .metric-card.gold {
+            border-top-color: #FFD700;
+        }
+        
+        .metric-card.danger {
+            border-top-color: #F44336;
+        }
+        
+        .metric-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .metric-icon {
+            font-size: 32px;
+        }
+        
+        .metric-title {
+            font-size: 16px;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: #009688;
+            margin-bottom: 8px;
+        }
+        
+        .metric-value.gold {
+            color: #FFD700;
+        }
+        
+        .metric-value.danger {
+            color: #F44336;
+        }
+        
+        .metric-desc {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .pulse-section {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 3px solid #009688;
+            margin-bottom: 24px;
+        }
+        
+        .pulse-header {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .pulse-bar-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .pulse-bar {
+            flex: 1;
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .pulse-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #009688 0%, #00BCD4 100%);
+            transition: width 0.5s ease;
+        }
+        
+        .pulse-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: #009688;
+        }
+        
+        .alert-banner {
+            background: #FFF9C4;
+            border: 2px solid #FFD700;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .alert-icon {
+            font-size: 32px;
+        }
+        
+        .alert-content strong {
+            display: block;
+            color: #F57C00;
+            margin-bottom: 4px;
+        }
+        
+        .alert-content p {
+            margin: 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧠 Life OS Dashboard</h1>
+        <div class="subtitle">Team wellness & workload monitoring</div>
+    </div>
+    
+    <div class="container">
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span class="metric-icon">🎯</span>
+                    <span class="metric-title">Focus Score</span>
+                </div>
+                <div class="metric-value" id="focusScore">72%</div>
+                <div class="metric-desc">Your current ability to maintain concentration</div>
+            </div>
+            
+            <div class="metric-card gold">
+                <div class="metric-header">
+                    <span class="metric-icon">📋</span>
+                    <span class="metric-title">Active Tasks</span>
+                </div>
+                <div class="metric-value gold" id="taskCount">8</div>
+                <div class="metric-desc" id="storyPoints">21 story points in progress</div>
+            </div>
+            
+            <div class="metric-card" id="burnoutCard">
+                <div class="metric-header">
+                    <span class="metric-icon">⚠️</span>
+                    <span class="metric-title">Burnout Risk</span>
+                </div>
+                <div class="metric-value" id="burnoutScore">45%</div>
+                <div class="metric-desc" id="burnoutLevel">Risk level: medium</div>
+            </div>
+        </div>
+        
+        <div class="pulse-section">
+            <h3 class="pulse-header">Daily Pulse</h3>
+            <div class="pulse-bar-container">
+                <div class="pulse-bar">
+                    <div class="pulse-bar-fill" id="pulseBar" style="width: 72%"></div>
+                </div>
+                <span class="pulse-value" id="pulseValue">72%</span>
+            </div>
+        </div>
+        
+        <div id="alertBanner" class="alert-banner" style="display: none;">
+            <span class="alert-icon">⚠️</span>
+            <div class="alert-content">
+                <strong>Burnout Alert</strong>
+                <p>Your workload suggests high burnout risk. Consider discussing workload with your manager.</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mock data for demo
+        const metrics = {
+            focusScore: 72,
+            taskCount: 8,
+            storyPoints: 21,
+            burnoutScore: 45,
+            burnoutLevel: 'medium'
+        };
+        
+        // Update UI based on risk level
+        if (metrics.burnoutScore > 60) {
+            document.getElementById('burnoutCard').className = 'metric-card danger';
+            document.getElementById('burnoutScore').className = 'metric-value danger';
+            document.getElementById('alertBanner').style.display = 'flex';
+        } else if (metrics.burnoutScore > 40) {
+            document.getElementById('burnoutCard').className = 'metric-card gold';
+            document.getElementById('burnoutScore').className = 'metric-value gold';
+        }
+        
+        // Animate pulse bar
+        setTimeout(() => {
+            document.getElementById('pulseBar').style.width = metrics.focusScore + '%';
+        }, 100);
+    </script>
+</body>
+</html>
+

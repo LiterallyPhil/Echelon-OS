@@ -1,0 +1,54 @@
+====================================================================
+  🚀 LIFE OS - START HERE
+====================================================================
+
+You have an Atlassian account and API key. Follow these steps:
+
+STEP 1: Navigate to the project
+   cd forge-app
+
+STEP 2: Install dependencies
+   npm install
+
+STEP 3: Build the app
+   forge build
+
+STEP 4: Login to Atlassian
+   forge login
+   (This opens your browser - log in with your Atlassian account)
+
+STEP 5: Register your app
+   forge register
+   (Choose "Create new app", name it "Life OS")
+
+STEP 6: Update App ID
+   Edit manifest.yml line 36
+   Replace the App ID with the one you got from register command
+
+STEP 7: Deploy
+   forge deploy
+
+STEP 8: Install on your site
+   forge install
+   (Select your Atlassian site when prompted)
+
+STEP 9: Access your app
+   Go to your Jira/Confluence site
+   Look for "Life OS" in the apps menu
+   Click to open your dashboard!
+
+====================================================================
+
+For detailed instructions, see: LAUNCH.md
+
+Quick help:
+- npm install       (install dependencies)
+- forge build      (build the app)
+- forge deploy     (deploy to cloud)
+- forge install    (install on site)
+- forge logs       (view logs)
+- forge tunnel     (development mode)
+
+====================================================================
+Good luck! 🚀
+

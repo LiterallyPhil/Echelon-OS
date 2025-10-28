@@ -1,0 +1,25 @@
+{
+  "name": "life-os-forge-app",
+  "version": "1.0.0",
+  "description": "Life OS for Business Teams - Team wellness and workload monitoring",
+  "type": "module",
+  "scripts": {
+    "lint": "forge lint",
+    "build": "forge build",
+    "watch": "forge watch",
+    "install": "forge install",
+    "tunnel": "forge tunnel"
+  },
+  "dependencies": {
+    "@forge/api": "^4.2.0"
+  },
+  "devDependencies": {
+    "@forge/cli": "^12.7.1",
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

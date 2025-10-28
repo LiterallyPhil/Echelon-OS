@@ -1,0 +1,10 @@
+{
+  "forge": {
+    "appId": "your-app-id-here",
+    "cloudId": "your-cloud-id-here",
+    "environmentVariables": {
+      "NODE_ENV": "development"
+    }
+  }
+}
+
